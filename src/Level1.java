@@ -1,13 +1,10 @@
 public class Level1 {
-    public static long calcFactorial(int N){
-        long result = 1;
-        for (int i = 2; i <= N; i++) {
-            result *= i;
+    public static int odometer(int [] oksana){
+        int rsl = oksana[0] * oksana[1];
+        for (int i = 2; i < oksana.length; i = i + 2) {
+            int time = oksana[i + 1] - oksana [i - 1];
+            rsl += oksana[i] * time;
         }
-        return result;
-    }
-
-    public static int squirrel(int N){
-        return String.valueOf(calcFactorial(N)).charAt(0) - 48;
+        return rsl;
     }
 }
