@@ -1,45 +1,17 @@
+import java.util.*;
+
 public class Level1 {
 
-    public static int sum2D(int[][] a) {
-        int sum = 0;
-        for(int[] n : a) {
-            for(int m : n) {
-                sum += m;
-            }
+    public static int [] MadMax(int N, int [] Tele) {
+        Arrays.sort(Tele);
+        int temp = Tele[N / 2];
+        Tele[N / 2] = Tele[N - 1];
+        Tele[N - 1] = temp;
+        for (int i = N / 2 + 1; i < N - 1; i++) {
+            temp = Tele[i];
+            Tele[i] = Tele[3 * N / 2 - i - 1];
+            Tele[3 * N / 2 - i - 1] = temp;
         }
-        return sum;
+        return Tele;
     }
-    public static int ConquestCampaign(int N, int M, int L, int [] battalion) {
-        int days = 1;
-        int[][] nm = new int[N][M];
-        for (int i = 0; i < battalion.length; i = i + 2) {
-            nm[battalion[i] - 1][battalion[i + 1] - 1] = 1;
-        }
-        while (sum2D(nm) != N * M) {
-            for (int i = 0; i < N; i++) {
-                for (int j = 0; j < M; j++) {
-                    if (nm[i][j] == 1) {
-                        try {
-                            nm[i][j + 1] = 1;
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                        }
-                        try {
-                            nm[i][j - 1] = 1;
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                        }
-                        try {
-                            nm[i + 1][j] = 1;
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                        }
-                        try {
-                            nm[i - 1][j] = 1;
-                        } catch (ArrayIndexOutOfBoundsException e) {
-                        }
-                    }
-                }
-            }
-            days++;
-        }
-        return days;
-        }
 }
