@@ -4,7 +4,11 @@ public class Level1 {
 
     public static List<String> xxx(int len, String s) {
         List<String> buffer = new ArrayList<>();
-        while (s.length() >= len) {
+        if (s.length() <= len) {
+            buffer.add(s);
+            return buffer;
+        }
+        while (s.length() > len) {
             for (int i = len - 1; i >= 0; i--) {
                 if (s.charAt(i) == ' ' && i > 0) {
                     buffer.add(s.substring(0, i));
