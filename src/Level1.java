@@ -2,37 +2,38 @@ import java.util.*;
 
 public class Level1 {
 
-    public static double len(int a, int b) {
-        double rsl = 1;
-        if (Math.abs(b - a) == 2 || Math.abs(b - a) == 7) {
-            rsl = Math.sqrt(2);
-        }
-        if (Math.abs(b - a) == 4 && (b != 3 && b != 7)) {
-            rsl = Math.sqrt(2);
-        }
-        if (Math.abs(b - a) == 5 && (b != 1 && b != 6)) {
-            rsl = Math.sqrt(2);
-        }
-        return rsl;
-    }
-
-    public static String PatternUnlock(int N, int [] hits) {
-        double sum = 0;
-        for (int i = 0; i < N - 1; i++) {
-            sum += len(hits[i], hits[i + 1]);
-        }
-        String a = String.valueOf(Math.round(sum * 100000));
-        char[] b = new char[a.length()];
-        int newSize = 0;
-        int i = 0;
-        for (char ch : a.toCharArray()) {
-            if (ch != '0') {
-                b[i] = ch;
-                newSize++;
-                i++;
+    public static List<String> xxx(int len, String s) {
+        List<String> buffer = new ArrayList<>();
+        while (s.length() >= len) {
+            for (int i = len - 1; i >= 0; i--) {
+                if (s.charAt(i) == ' ' && i > 0) {
+                    buffer.add(s.substring(0, i));
+                    s = s.substring(s.charAt(i + 1) != ' ' ? i + 1 : i + 2);
+                    i = len;
+                    if (s.length() <= len) {
+                        buffer.add(s);
+                        return buffer;
+                    }
+                }
+            }
+            buffer.add(s.substring(0, len));
+            s = s.substring(s.charAt(len) != ' ' ? len : len + 1);
+            if (s.length() <= len && s.length() != 0 && !" ".equals(s)) {
+                buffer.add(s);
+                return buffer;
             }
         }
-        return new String(Arrays.copyOf(b, newSize));
+        return buffer;
+    }
+
+    public static int [] WordSearch(int len, String s, String subs)  {
+        ArrayList<Integer> rsl = new ArrayList<>();
+        List<String> strings = xxx(len, s);
+        System.out.println(strings);
+        for (String x : strings) {
+            rsl.add(x.matches("(.*)"+ "(\s|^)" + subs+ "(\s|$)" + "(.*)") ? 1 : 0);
+            }
+        return rsl.stream().mapToInt(i -> i).toArray();
     }
 }
 
