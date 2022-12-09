@@ -30,7 +30,7 @@ public class Level1 {
                     buffer2.append(nm[j][i]);
                 }
             }
-            if (encode) {
+            if (encode && i != m - 1) {
                 buffer2.append(" ");
             }
         }
