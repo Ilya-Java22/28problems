@@ -2,6 +2,21 @@ import java.util.*;
 
 public class Level1 {
 
+    public static char[][] fillArray(char[][] ch, String s) {
+        int k = 0;
+        for (int i = 0; i < ch.length; i++) {
+            for (int j = 0; j < ch[i].length && k < s.length(); j++) {
+                if (s.charAt(k) == ' '&& j == 0) {
+                    k++;
+                } else if (s.charAt(k) == ' '&& j != 0) {
+                    break;
+                }
+                ch[i][j] = s.charAt(k++);
+            }
+        }
+        return ch;
+    }
+
     public static String TheRabbitsFoot(String s, boolean encode)  {
         StringBuilder buffer = new StringBuilder();
         for (char x : s.toCharArray()) {
@@ -20,9 +35,15 @@ public class Level1 {
             m = temp;
         }
         char[][] nm = new char[n][m];
-        for (int i = 0; i < n; i++) {
-            buffer.getChars(m * i, Math.min(m * (i + 1), buffer.length()), nm[i],0);
+
+        if (encode) {
+            for (int i = 0; i < n; i++) {
+                buffer.getChars(m * i, Math.min(m * (i + 1), buffer.length()), nm[i], 0);
+            }
+        } else {
+            fillArray(nm, s);
         }
+
         StringBuilder buffer2 = new StringBuilder();
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
