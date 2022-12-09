@@ -2,59 +2,109 @@ import java.util.*;
 
 public class Level1 {
 
-    public static char[][] fillArray(char[][] ch, String s) {
-        int k = 0;
-        for (int i = 0; i < ch.length; i++) {
-            for (int j = 0; j < ch[i].length && k < s.length(); j++) {
-                if (s.charAt(k) == ' '&& j == 0) {
-                    k++;
-                } else if (s.charAt(k) == ' '&& j != 0) {
-                    break;
-                }
-                ch[i][j] = s.charAt(k++);
-            }
-        }
-        return ch;
-    }
+    public static int PrintingCosts(String Line)  {
+        HashMap<Character, Integer> hm = new HashMap<>();
+        //не нашел арифметической связи значений таблицы "принтера" и таблицы ascii символов, так что делаю топорно
+        hm.put(' ', 0);
+        hm.put('!', 9);
+        hm.put('"', 6);
+        hm.put('#', 24);
+        hm.put('$', 29);
+        hm.put('%', 22);
+        hm.put('&', 24);
+        hm.put('\'', 3);
+        hm.put('(', 12);
+        hm.put(')', 12);
+        hm.put('*', 17);
+        hm.put('+', 13);
+        hm.put(',', 7);
+        hm.put('-', 7);
+        hm.put('.', 4);
+        hm.put('/', 10);
+        hm.put('0', 22);
+        hm.put('1', 19);
+        hm.put('2', 22);
+        hm.put('3', 23);
+        hm.put('4', 21);
+        hm.put('5', 27);
+        hm.put('6', 26);
+        hm.put('7', 16);
+        hm.put('8', 23);
+        hm.put('9', 26);
+        hm.put(':', 8);
+        hm.put(';', 11);
+        hm.put('<', 10);
+        hm.put('=', 14);
+        hm.put('>', 10);
+        hm.put('?', 15);
+        hm.put('@', 32);
+        hm.put('A', 24);
+        hm.put('B', 29);
+        hm.put('C', 20);
+        hm.put('D', 26);
+        hm.put('E', 26);
+        hm.put('F', 20);
+        hm.put('G', 25);
+        hm.put('H', 25);
+        hm.put('I', 18);
+        hm.put('J', 18);
+        hm.put('K', 21);
+        hm.put('L', 16);
+        hm.put('M', 28);
+        hm.put('N', 25);
+        hm.put('O', 26);
+        hm.put('P', 23);
+        hm.put('Q', 31);
+        hm.put('R', 28);
+        hm.put('S', 25);
+        hm.put('T', 16);
+        hm.put('U', 23);
+        hm.put('V', 19);
+        hm.put('W', 26);
+        hm.put('X', 18);
+        hm.put('Y', 14);
+        hm.put('Z', 22);
+        hm.put('[', 18);
+        hm.put('\\', 10);
+        hm.put(']', 18);
+        hm.put('^', 7);
+        hm.put('_', 8);
+        hm.put('`', 3);
+        hm.put('a', 23);
+        hm.put('b', 25);
+        hm.put('c', 17);
+        hm.put('d', 25);
+        hm.put('e', 23);
+        hm.put('f', 18);
+        hm.put('g', 30);
+        hm.put('h', 21);
+        hm.put('i', 15);
+        hm.put('j', 20);
+        hm.put('k', 21);
+        hm.put('l', 16);
+        hm.put('m', 22);
+        hm.put('n', 18);
+        hm.put('o', 20);
+        hm.put('p', 25);
+        hm.put('q', 25);
+        hm.put('r', 13);
+        hm.put('s', 21);
+        hm.put('t', 17);
+        hm.put('u', 17);
+        hm.put('v', 13);
+        hm.put('w', 19);
+        hm.put('x', 13);
+        hm.put('y', 24);
+        hm.put('z', 19);
+        hm.put('{', 18);
+        hm.put('|', 12);
+        hm.put('}', 18);
+        hm.put('~', 9);
 
-    public static String TheRabbitsFoot(String s, boolean encode)  {
-        StringBuilder buffer = new StringBuilder();
-        for (char x : s.toCharArray()) {
-            if (x != ' ') {
-                buffer.append(x);
-            }
+        int sum = 0;
+        for(char x : Line.toCharArray()) {
+            sum += hm.getOrDefault(x,23);
         }
-        int n = (int) Math.sqrt(buffer.length());
-        int m = (int) Math.ceil(Math.sqrt(buffer.length()));
-        if (n * m < buffer.length()) {
-            n++;
-        }
-        if (!encode) {
-            int temp = n;
-            n = m;
-            m = temp;
-        }
-        char[][] nm = new char[n][m];
-
-        if (encode) {
-            for (int i = 0; i < n; i++) {
-                buffer.getChars(m * i, Math.min(m * (i + 1), buffer.length()), nm[i], 0);
-            }
-        } else {
-            fillArray(nm, s);
-        }
-
-        StringBuilder buffer2 = new StringBuilder();
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                if (nm[j][i] != 0) {
-                    buffer2.append(nm[j][i]);
-                }
-            }
-            if (encode && i != m - 1) {
-                buffer2.append(" ");
-            }
-        }
-        return buffer2.toString();
+        return sum;
     }
 }
