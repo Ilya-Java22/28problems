@@ -1,12 +1,20 @@
-import java.util.*;
-
 public class Level1 {
-    public static int MaximumDiscount(int N, int [] price) {
-        int sum = 0;
-        Arrays.sort(price);
-        for (int i = N - 3; i >= 0; i -= 3) {
-            sum += price[i];
+    public static boolean LineAnalysis(String line) {
+        if (line.matches("\\*+")) {
+            return true;
         }
-        return sum;
+        String s = line.substring(0,line.indexOf('*', 1));
+        int lLen = line.length();
+        int sLen = s.length();
+        if (lLen % sLen != 1) {
+            return false;
+        }
+        for (int i = sLen; i < lLen - sLen; i += sLen) {
+            String ss = line.substring(i, i + sLen);
+            if (!ss.equals(s)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
