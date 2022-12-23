@@ -1,17 +1,32 @@
+import java.util.Arrays;
+
 public class Level1 {
-    public static boolean LineAnalysis(String line) {
-        if (line.matches("\\*+")) {
-            return true;
+    public static boolean MisterRobot(int N, int[] data) {
+        boolean x = true;
+        while (x) {
+            x = false;
+            for (int i = 1, temp = 0; i < N - 1; i++) {
+                if (data[i] >= data[i - 1] && data[i + 1] < data[i - 1]
+                        || data[i + 1] == data[i - 1] && data[i] > data[i - 1]) {
+                    temp = data[i + 1];
+                    data[i + 1] = data[i];
+                    data[i] = data[i - 1];
+                    data[i - 1] = temp;
+                    x = true;
+                    continue;
+                }
+                if (data[i + 1] <= data[i - 1] && data[i + 1] > data[i]
+                        || data[i + 1] == data[i] && data[i - 1] > data[i]) {
+                    temp = data[i - 1];
+                    data[i - 1] = data[i];
+                    data[i] = data[i + 1];
+                    data[i + 1] = temp;
+                    x = true;
+                }
+            }
         }
-        String s = line.substring(0,line.indexOf('*', 1));
-        int lLen = line.length();
-        int sLen = s.length();
-        if (lLen % sLen != 1) {
-            return false;
-        }
-        for (int i = sLen; i < lLen - sLen; i += sLen) {
-            String ss = line.substring(i, i + sLen);
-            if (!ss.equals(s)) {
+        for (int i = 0; i < N - 1; i++) {
+            if (data[i] > data[i + 1]) {
                 return false;
             }
         }
