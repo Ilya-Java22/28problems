@@ -9,7 +9,7 @@ public class Level1 {
         }
         List<Map.Entry<String, Integer>> entries = new ArrayList<>(hm.entrySet());
         Comparator<Map.Entry<String, Integer>> comp = (o1, o2) -> {
-            int rsl =  o1.getValue().compareTo(o2.getValue());
+            int rsl =  o2.getValue().compareTo(o1.getValue());
             return rsl == 0 ? o1.getKey().compareTo(o2.getKey()) : rsl;
         };
         entries.sort(comp);
