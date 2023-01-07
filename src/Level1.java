@@ -2,29 +2,22 @@ import java.util.*;
 
 public class Level1 {
 
-    public static int Greater(String c, List<String> list) {
-        for (String ch : list) {
-            if (ch.compareTo(c) > 0) {
-                return list.indexOf(ch);
-            }
+    public static boolean SherlockValidString(String s) {
+        HashMap<Character, Integer> hm = new HashMap<>();
+        for (Character ch : s.toCharArray()) {
+            hm.put(ch, hm.getOrDefault(ch, 0) + 1);
         }
-        return -1;
-    }
-
-    public static String BiggerGreater(String input) {
-        for (int i = input.length() - 1; i > 0; i--) {
-            if (input.charAt(i) > input.charAt(i - 1)) {
-                String[] s1 = input.split("");
-                List<String> chlist = Arrays.asList(s1);
-                chlist.subList(i, chlist.size()).sort(Comparator.naturalOrder());
-                int x = Greater(String.valueOf(input.charAt(i - 1)), chlist.subList(i, chlist.size()));
-                String temp = chlist.get(i - 1);
-                chlist.set(i - 1, chlist.get(i + x));
-                chlist.set(i + x, temp);
-                return String.join("", chlist);
-            }
+        List<Integer> rsl = new ArrayList<>(hm.values());
+        if (Collections.frequency(rsl, rsl.get(0)) == rsl.size()) {
+            return true;
         }
-        return "";
+        Collections.sort(rsl);
+        if (rsl.get(0) == 1 && (Collections.frequency(rsl, rsl.get(rsl.size() - 1)) == rsl.size() - 1)) {
+            return true;
+        }
+        if (rsl.get(rsl.size() - 1) == rsl.get(0) + 1 && (Collections.frequency(rsl, rsl.get(0)) == rsl.size() - 1)) {
+            return true;
+        }
+        return false;
     }
 }
-
