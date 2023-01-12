@@ -1,66 +1,54 @@
-import java.util.*;
-
 public class Level1 {
-    public static int[][] stringToInt(int H, int W, String[] tree) {
-        int[][] rsl = new int[H][W];
-        for (int i = 0; i < H; i++) {
-            for (int j = 0; j < W; j++) {
-                rsl[i][j] = tree[i].charAt(j) == '+' ? 1 : 0;
+
+    public static StringBuilder[] stringToStringBuilder(String[] Matrix, int M, int N) {
+        StringBuilder[] sb = new StringBuilder[Math.min(N, M) / 2];
+        for (int k = 0; k < sb.length; k++) {
+            sb[k] = new StringBuilder();
+            for (int i = k; i < N - k; i++) {
+                sb[k].append(Matrix[k].charAt(i));
+            }
+            for (int i = 1 + k; i < M - 1 - k; i++) {
+                sb[k].append(Matrix[i].charAt(N - 1 - k));
+            }
+            for (int i = k; i < N - k; i++) {
+                sb[k].append(Matrix[M - 1 - k].charAt(N - 1 - i));
+            }
+            for (int i = 1 + k; i < M - 1 - k; i++) {
+                sb[k].append(Matrix[M - 1 - i].charAt(k));
             }
         }
-        return rsl;
+        return sb;
     }
 
-    public static String[] intToString(int H, int W, int[][] orig) {
-        String[] rsl = new String[H];
-        for (int i = 0; i < H; i++) {
-            StringBuilder sb = new StringBuilder();
-            for (int j = 0; j < W; j++) {
-                sb.append(orig[i][j] == 0 ? '.' : '+');
+    public static char[][] stringBuilderToCharArray(StringBuilder[] sb, int M, int N) {
+        char[][] ch = new char[M][N];
+        for (int k = 0; k < sb.length; k++) {
+            int j = 0;
+            for (int i = k; i < N - k; i++) {
+                ch[k][i] = sb[k].charAt(j++);
             }
-            rsl[i] = sb.toString();
+            for (int i = 1 + k; i < M - 1 - k; i++) {
+                ch[i][N - 1 - k] = sb[k].charAt(j++);
+            }
+            for (int i = k; i < N - k; i++) {
+                ch[M - 1 - k][N - 1 - i] = sb[k].charAt(j++);
+            }
+            for (int i = 1 + k; i < M - 1 - k; i++) {
+                ch[M - 1 - k - i][k] = sb[k].charAt(j++);
+            }
         }
-        return rsl;
+        return ch;
     }
 
-    public static void destroy(int H, int W, int[][] orig) {
-        for (int i = 0; i < H; i++) {
-            for (int j = 0; j < W; j++) {
-                if (orig[i][j] >= 3) {
-                    orig[i][j] = 0;
-                    try {
-                        orig[i][j + 1] = orig[i][j + 1] >= 3 ? 3 : 0;
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                    }
-                    try {
-                        orig[i][j - 1] = orig[i][j - 1] >= 3 ? 3 : 0;
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                    }
-                    try {
-                        orig[i + 1][j] = orig[i + 1][j] >= 3 ? 3 : 0;
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                    }
-                    try {
-                        orig[i - 1][j] = orig[i - 1][j] >= 3 ? 3 : 0;
-                    } catch (ArrayIndexOutOfBoundsException e) {
-                    }
-                }
-            }
+    public static void MatrixTurn(String[] Matrix, int M, int N, int T) {
+        StringBuilder[] sb = stringToStringBuilder(Matrix,  M,  N);
+        for (StringBuilder s : sb) {
+            s.insert(0, s.substring(s.length() - T));
+            s.delete(s.length() - T, s.length());
         }
-    }
-
-    public static String[] TreeOfLife(int H, int W, int N, String[] tree) {
-        int[][] intTree = stringToInt(H, W, tree);
-        int age = 0;
-        while (age < N) {
-            age++;
-            for (int[] arr : intTree) {
-                Arrays.setAll(arr, e -> ++arr[e]);
-            }
-            if (age > 0 && age % 2 == 0) {
-                destroy(H, W, intTree);
-            }
+        char[][] ch = stringBuilderToCharArray(sb, M, N);
+        for (int i = 0; i < M; i++) {
+            Matrix[i] = String.valueOf(ch[i]);
         }
-        return intToString(H, W, intTree);
     }
 }
