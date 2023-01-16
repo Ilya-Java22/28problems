@@ -1,24 +1,25 @@
 import java.util.*;
+import static java.lang.Character.isDigit;
 
 public class Level1 {
 
-    public static int[] s(int[] A, int N) {
-        LinkedList<Integer> B = new LinkedList<>();
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N - i; j++) {
-                int k = i + j;
-                int[] ar = Arrays.copyOfRange(A, j, k + 1);
-                Arrays.sort(ar);
-                B.addLast(ar[ar.length - 1]);
+    public static boolean white_walkers(String village) {
+        List<Integer> list = new ArrayList<>();
+        for (int i = 0; i < village.length(); i++) {
+            if (isDigit(village.charAt(i))) {
+                list.add(i);
             }
         }
-        return B.stream().mapToInt(i -> i).toArray();
-    }
-
-    public static boolean TransformTransform(int[] A, int N) {
-        int[] arr = s(A, N);
-        int[] arr2 = s(arr, arr.length);
-        int sum = Arrays.stream(A).sum();
-        return sum % 2 == 0;
+        if (list.size() < 2) {
+            return false;
+        }
+        for (int i = 0; i < list.size() - 1; i++) {
+            if (village.charAt(list.get(i)) + village.charAt(list.get(i + 1)) == 106
+                    && !village.substring(list.get(i) + 1, list.get(i + 1)).matches("(\\D*)"
+                    + "=" + "(\\D*)" + "=" + "(\\D*)" + "=" + "(\\D*)")) {
+                return false;
+            }
+        }
+        return true;
     }
 }
