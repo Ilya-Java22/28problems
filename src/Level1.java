@@ -21,6 +21,9 @@ public class Level1 {
                 b = i + 1;
             }
         }
+        if (a == -1) {
+            return false;
+        }
         Arrays.sort(copyF, a, b + 1);
         if (b - a > 1) {
             return checkSort(copyF);
